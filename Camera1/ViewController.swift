@@ -27,7 +27,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     @IBOutlet var blurButton:UIButton!
     
     let imageArray = ["sepia.jpg","sepia.jpg","sepia.jpg"]
-    let labelArray = ["","",""]
+    let labelArray = ["sepia","blur","another"]
     
     
 
@@ -44,7 +44,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! FilterCollectionViewCell
         
         cell.backgroundColor = UIColor.orangeColor()
-        cell.filterlabel.text = "sepia"
+        cell.filterlabel.text = indexPath.row.description
+//        cell.filterlabel.text = "\(labelArray[indexPath.row])"
         cell.exampleimage.image = UIImage(named: "sepia.jpg")
         
         return cell
@@ -72,7 +73,13 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
 //        cameraImage.image = UIImage(CIImage: myOutputImage)
 //        
 //        cameraImage.setNeedsDisplay()
-        sepia()
+        print("Num: \(indexPath.row)")
+
+        if indexPath.row == 0{
+            sepia()
+        }else if indexPath.row == 1{
+            Blur()
+        }
     }
 
     
@@ -151,8 +158,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     
     func sepia(){
 //    MARK:SepiaFilter
-        
-        
         let mySepiaFilter = CIFilter(name: "CISepiaTone")
         
         mySepiaFilter!.setValue(CIImage(image: cameraImage.image!), forKey: kCIInputImageKey)
@@ -167,8 +172,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     }
     
     
-    
-    @IBAction func Blur(sender:UIButton){
+    func Blur(){
         
         let myBlurFilter = CIFilter(name: "CIGaussianBlur")
         

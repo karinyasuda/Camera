@@ -6,43 +6,6 @@
     </dependencies>
     <scenes>
         <!--View Controller-->
-        <scene sceneID="ATi-Nv-bCd">
-            <objects>
-                <viewController id="NBA-K9-txK" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="hUK-ci-t36"/>
-                        <viewControllerLayoutGuide type="bottom" id="sav-Ze-kap"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="KIE-5i-Gkh">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d7P-zc-MhX">
-                                <rect key="frame" x="115" y="149" width="90" height="59"/>
-                                <color key="backgroundColor" red="0.035565486879999997" green="0.0071841344329999996" blue="0.3363123422" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="Tap!">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="BYZ-38-t0r" kind="presentation" id="Ta3-PM-EIi"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="OG4-80-i0Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-372" y="526"/>
-        </scene>
-        <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Camera1" customModuleProvider="target" sceneMemberID="viewController">
@@ -93,9 +56,6 @@
                                 <state key="normal" title="Blur">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <connections>
-                                    <action selector="Blur:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ugl-wc-cdT"/>
-                                </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fMl-1W-APt">
                                 <rect key="frame" x="5" y="381" width="311" height="70"/>
@@ -151,7 +111,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="blurButton" destination="CfZ-vs-eFi" id="06k-sb-yox"/>
+                        <outlet property="blurButton" destination="CfZ-vs-eFi" id="Y6Y-7N-CQH"/>
                         <outlet property="cameraImage" destination="vKs-kf-ucd" id="dty-7F-Tv0"/>
                         <outlet property="collectionView" destination="fMl-1W-APt" id="NQK-EQ-SOg"/>
                         <outlet property="saveButton" destination="WFD-Nl-vky" id="KTO-fA-MWc"/>
@@ -162,7 +122,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="305" y="387"/>
+            <point key="canvasLocation" x="112" y="348"/>
         </scene>
     </scenes>
     <resources>
