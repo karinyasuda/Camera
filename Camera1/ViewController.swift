@@ -61,15 +61,21 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     
     //Cellが選択されたときに呼び出される
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("sepia")
         print("Num: \(indexPath.row)")
+        print("\(labelArray[indexPath.row])")
 
         if indexPath.row == 0{
             sepia()
         }else if indexPath.row == 1{
             Blur()
+        }else if indexPath.row == 2{
+            another()
+        }else if indexPath.row == 3{
+            mono()
+        
         }
     }
+    
 
     
     
@@ -167,7 +173,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         
         myBlurFilter!.setValue(CIImage(image: cameraImage.image!), forKey: kCIInputImageKey)
         
-        myBlurFilter!.setValue(1.0, forKey: kCIInputIntensityKey)
+//        myBlurFilter!.setValue(1.0, forKey: kCIInputIntensityKey)
         
         let myOutputImage2 : CIImage = myBlurFilter!.outputImage!
         
@@ -177,7 +183,59 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     
     
     }
+    func another(){
+//            MARK:RGBColorFilterの付け方をメモとして残したかったので。
+//                CIImage *cameraImage = [CIImage imageWithCGImage:uiImage.CGImage]
+                // カラーエフェクトを指定してCIFilterをインスタンス化.
+                let myColorFilter = CIFilter(name: "CIColorCrossPolynomial")
+        
+                // イメージの!セット.
+                myColorFilter!.setValue(CIImage(image: cameraImage.image!), forKey: kCIInputImageKey)
+        
+                let r: [CGFloat] = [0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+                let g: [CGFloat] = [0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+                let b: [CGFloat] = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        
+                // モノクロ化するための値の調整.
+                myColorFilter!.setValue(CIVector(values: r, count: 10), forKey: "inputRedCoefficients")
+                myColorFilter!.setValue(CIVector(values: g, count: 10), forKey: "inputGreenCoefficients")
+                myColorFilter!.setValue(CIVector(values: b, count: 10), forKey: "inputBlueCoefficients")
+        
+                // フィルターを通した画像をアウトプット.
+                let myOutputImage : CIImage = myColorFilter!.outputImage!
+        
+                // 再びUIViewにセット.
+                cameraImage.image = UIImage(CIImage: myOutputImage)
+                
+                // 再描画.
+                cameraImage.setNeedsDisplay()
+    }
     
+    
+    func mono(){
+    
+        // カラーエフェクトを指定してCIFilterをインスタンス化.
+        let myMonochromeFilter = CIFilter(name: "CIColorMonochrome")
+        
+        // イメージのセット.
+        myMonochromeFilter!.setValue(CIImage(image: cameraImage.image!), forKey: kCIInputImageKey)
+        
+        // ものくろ化するための値の調整.
+        myMonochromeFilter!.setValue(CIColor(red: 0.8, green: 0.8, blue: 0.8), forKey: kCIInputColorKey)
+        myMonochromeFilter!.setValue(1.0, forKey: kCIInputIntensityKey)
+        
+        // フィルターを通した画像をアウトプット.
+        let myOutputImage : CIImage = myMonochromeFilter!.outputImage!
+        
+        // 再びUIViewにセット.
+        cameraImage.image = UIImage(CIImage: myOutputImage)
+        
+        // 再描画.
+        cameraImage.setNeedsDisplay()
+    
+    
+    
+    }
     
     
     
