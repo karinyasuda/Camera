@@ -26,8 +26,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     @IBOutlet var sepiaButton:UIButton!
     @IBOutlet var blurButton:UIButton!
     
-    let imageArray = ["sepia.jpg","sepia.jpg","sepia.jpg"]
-    let labelArray = ["sepia","blur","another"]
+    let imageArray = ["sepia.jpg","sepia.jpg","sepia.jpg","","","","","","",""]
+    let labelArray = ["sepia","blur","another","","","","","","",""]
     
     
 
@@ -44,9 +44,10 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! FilterCollectionViewCell
         
         cell.backgroundColor = UIColor.orangeColor()
-        cell.filterlabel.text = indexPath.row.description
-//        cell.filterlabel.text = "\(labelArray[indexPath.row])"
+//        cell.filterlabel.text = indexPath.row.description
+        cell.filterlabel.text = "\(labelArray[indexPath.row])"
         cell.exampleimage.image = UIImage(named: "sepia.jpg")
+        
         
         return cell
     }
@@ -61,18 +62,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     //Cellが選択されたときに呼び出される
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("sepia")
-//
-//        let mySepiaFilter = CIFilter(name: "CISepiaTone")
-//        
-//        mySepiaFilter!.setValue(CIImage(image: cameraImage.image!), forKey: kCIInputImageKey)
-//        
-//        mySepiaFilter!.setValue(1.0, forKey: kCIInputIntensityKey)
-//        
-//        let myOutputImage : CIImage = mySepiaFilter!.outputImage!
-//        
-//        cameraImage.image = UIImage(CIImage: myOutputImage)
-//        
-//        cameraImage.setNeedsDisplay()
         print("Num: \(indexPath.row)")
 
         if indexPath.row == 0{
