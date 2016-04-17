@@ -25,6 +25,11 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     //セピア加工用のボタン
     @IBOutlet var sepiaButton:UIButton!
     @IBOutlet var blurButton:UIButton!
+    
+    let imageArray = ["sepia.jpg","sepia.jpg","sepia.jpg"]
+    let labelArray = ["","",""]
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +60,19 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     //Cellが選択されたときに呼び出される
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("sepia")
+//
+//        let mySepiaFilter = CIFilter(name: "CISepiaTone")
+//        
+//        mySepiaFilter!.setValue(CIImage(image: cameraImage.image!), forKey: kCIInputImageKey)
+//        
+//        mySepiaFilter!.setValue(1.0, forKey: kCIInputIntensityKey)
+//        
+//        let myOutputImage : CIImage = mySepiaFilter!.outputImage!
+//        
+//        cameraImage.image = UIImage(CIImage: myOutputImage)
+//        
+//        cameraImage.setNeedsDisplay()
+        sepia()
     }
 
     
@@ -92,6 +110,9 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
             imagepicker.delegate = self
             //カメラへのアクセス
             imagepicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+            
+            imagepicker.allowsEditing = true
+            
             self.presentViewController(imagepicker, animated: true, completion: nil)
             
         }
@@ -128,40 +149,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
  
     
     
-    @IBAction func sepia(sender: UIButton){
-        
-    
-//    MARK:RGBColorFilter
-//        CIImage *cameraImage = [CIImage imageWithCGImage:uiImage.CGImage]
-        
-//        // カラーエフェクトを指定してCIFilterをインスタンス化.
-//        let myColorFilter = CIFilter(name: "CIColorCrossPolynomial")
-//        
-//        // イメージの!セット.
-//        myColorFilter!.setValue(CIImage(image: cameraImage.image!), forKey: kCIInputImageKey)
-//        
-//        let r: [CGFloat] = [0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-//        let g: [CGFloat] = [0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-//        let b: [CGFloat] = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-//        
-//        // モノクロ化するための値の調整.
-//        myColorFilter!.setValue(CIVector(values: r, count: 10), forKey: "inputRedCoefficients")
-//        myColorFilter!.setValue(CIVector(values: g, count: 10), forKey: "inputGreenCoefficients")
-//        myColorFilter!.setValue(CIVector(values: b, count: 10), forKey: "inputBlueCoefficients")
-//
-//        // フィルターを通した画像をアウトプット.
-//        let myOutputImage : CIImage = myColorFilter!.outputImage!
-//        
-//        // 再びUIViewにセット.
-//        cameraImage.image = UIImage(CIImage: myOutputImage)
-//        
-//        // 再描画.
-//        cameraImage.setNeedsDisplay()
-//    
-    
-        
-        
-    
+    func sepia(){
 //    MARK:SepiaFilter
         
         
@@ -178,7 +166,9 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         cameraImage.setNeedsDisplay()
     }
     
-    @IBAction func Blur(){
+    
+    
+    @IBAction func Blur(sender:UIButton){
         
         let myBlurFilter = CIFilter(name: "CIGaussianBlur")
         
@@ -186,9 +176,9 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         
         myBlurFilter!.setValue(1.0, forKey: kCIInputIntensityKey)
         
-        let myOutputImage : CIImage = myBlurFilter!.outputImage!
+        let myOutputImage2 : CIImage = myBlurFilter!.outputImage!
         
-        cameraImage.image = UIImage(CIImage: myOutputImage)
+        cameraImage.image = UIImage(CIImage: myOutputImage2)
         
         cameraImage.setNeedsDisplay()
     

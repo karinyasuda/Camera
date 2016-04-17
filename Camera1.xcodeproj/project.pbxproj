@@ -23,6 +23,7 @@
 		9AC23B391CC13B7C00DE3ADA /* cameraroll2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9AC23B361CC13B7C00DE3ADA /* cameraroll2.png */; };
 		9AC23B3A1CC13B7C00DE3ADA /* cameraroll3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9AC23B371CC13B7C00DE3ADA /* cameraroll3.png */; };
 		9AC23B3B1CC13B7C00DE3ADA /* cameraroll.png in Resources */ = {isa = PBXBuildFile; fileRef = 9AC23B381CC13B7C00DE3ADA /* cameraroll.png */; };
+		9AC23B3D1CC35E3D00DE3ADA /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AC23B3C1CC35E3D00DE3ADA /* Photos.framework */; };
 		9AEAB43B1CB7C65800B5860F /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEAB43A1CB7C65700B5860F /* CoreImage.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,7 @@
 		9AC23B361CC13B7C00DE3ADA /* cameraroll2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraroll2.png; sourceTree = "<group>"; };
 		9AC23B371CC13B7C00DE3ADA /* cameraroll3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraroll3.png; sourceTree = "<group>"; };
 		9AC23B381CC13B7C00DE3ADA /* cameraroll.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraroll.png; sourceTree = "<group>"; };
+		9AC23B3C1CC35E3D00DE3ADA /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		9AEAB43A1CB7C65700B5860F /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -74,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AC23B3D1CC35E3D00DE3ADA /* Photos.framework in Frameworks */,
 				9AEAB43B1CB7C65800B5860F /* CoreImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -98,6 +101,7 @@
 		9A54CF191CB50F8A00C0DD25 = {
 			isa = PBXGroup;
 			children = (
+				9AC23B3C1CC35E3D00DE3ADA /* Photos.framework */,
 				9AEAB43A1CB7C65700B5860F /* CoreImage.framework */,
 				9A54CF241CB50F8A00C0DD25 /* Camera1 */,
 				9A54CF391CB50F8C00C0DD25 /* Camera1Tests */,
