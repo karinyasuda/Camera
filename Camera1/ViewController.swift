@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  Camera1
 //
-//  Created by Karin on 2016/04/06.
-//  Copyright © 2016年 Karin. All rights reserved.
+//  Created by codecafe on 2016/04/06.
+//  Copyright © 2016年 codecafe. All rights reserved.
 //
 
 import UIKit
@@ -18,63 +18,14 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     @IBOutlet var selectButton : UIButton!
     @IBOutlet var takePhotoButton:UIButton!
     
-    
-    //filterの設定をこのCollectionViewにつなげていきたい。
-    @IBOutlet weak var collectionView: UICollectionView!
-    
     //セピア加工用のボタン
     @IBOutlet var sepiaButton:UIButton!
     @IBOutlet var blurButton:UIButton!
     
-    let imageArray = ["sepia.jpg","sepia.jpg","sepia.jpg",""]
-    let labelArray = ["sepia","blur","another","","","","","","",""]
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
-    
-    
-    //MARK:Cellの設定
-    //Cellに値を設定する
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! FilterCollectionViewCell
-        
-        cell.backgroundColor = UIColor.orangeColor()
-        //        cell.filterlabel.text = indexPath.row.description
-        cell.filterlabel.text = "\(labelArray[indexPath.row])"
-        cell.exampleimage.image = UIImage(named: "sepia.jpg")
-        
-        
-        return cell
-    }
-    
-    
-    //Cellの総数を返す
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
-    }
-    
-    
-    //Cellが選択されたときに呼び出される
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("Num: \(indexPath.row)")
-        print("\(labelArray[indexPath.row])")
-        
-        if indexPath.row == 0{
-            sepia()
-        }else if indexPath.row == 1{
-            Blur()
-        }else if indexPath.row == 2{
-            another()
-        }else if indexPath.row == 3{
-            mono()
-            
-        }
-    }
     //写真を撮る　カメラの起動
     @IBAction func takePhoto(){
         
@@ -90,8 +41,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         }
             //難しければ、"error"とログを表示
         else{
-            
-            
             print("error")
         }
         
@@ -154,8 +103,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     }
     
     
-    
-    func sepia(){
+    @IBAction func sepiaButton(sender: AnyObject) {
         //    MARK:SepiaFilter
         let mySepiaFilter = CIFilter(name: "CISepiaTone")
         
@@ -163,7 +111,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         
         mySepiaFilter!.setValue(1.0, forKey: kCIInputIntensityKey)
         
-        let myOutputImage : CIImage = mySepiaFilter!.outputImage!
         //コンテキストを作成
         let ciContext:CIContext = CIContext(options:nil)
         
@@ -175,13 +122,12 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         cameraImage.setNeedsDisplay()
     }
     
-    
     func Blur(){
         
         let myBlurFilter = CIFilter(name: "CIGaussianBlur")
         
         myBlurFilter!.setValue(CIImage(image: cameraImage.image!), forKey: kCIInputImageKey)
-
+        
         //コンテキストを作成
         let ciContext:CIContext = CIContext(options:nil)
         
@@ -243,8 +189,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         cameraImage.image = UIImage(CGImage: cgImg, scale: 1.0, orientation:UIImageOrientation.Up)
         
         cameraImage.setNeedsDisplay()
-        
-        
         
     }
     

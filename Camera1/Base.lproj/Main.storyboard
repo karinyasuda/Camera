@@ -38,6 +38,9 @@
                                 <state key="normal" title="sepia">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="sepiaButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fvj-T8-vBm"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gGb-mI-MFy">
                                 <rect key="frame" x="160" y="401" width="46" height="30"/>
@@ -57,45 +60,6 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fMl-1W-APt">
-                                <rect key="frame" x="5" y="381" width="311" height="70"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="y53-hz-D1t">
-                                    <size key="itemSize" width="60" height="60"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="hMr-AG-WF8" customClass="FilterCollectionViewCell" customModule="Camera1" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="5" width="60" height="60"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hy9-E8-q8H">
-                                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIv-UJ-4Oh">
-                                                    <rect key="frame" x="10" y="39" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <connections>
-                                            <outlet property="exampleimage" destination="hy9-E8-q8H" id="DI1-Y9-rTO"/>
-                                            <outlet property="filterlabel" destination="dIv-UJ-4Oh" id="XyZ-Yk-VV3"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="VZl-a2-Axk"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="eSa-na-sdI"/>
-                                </connections>
-                            </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WFD-Nl-vky">
                                 <rect key="frame" x="245" y="482" width="55" height="55"/>
                                 <state key="normal" backgroundImage="disk2.png"/>
@@ -104,7 +68,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vKs-kf-ucd">
-                                <rect key="frame" x="10" y="91" width="300" height="252"/>
+                                <rect key="frame" x="10" y="12" width="300" height="331"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -113,7 +77,6 @@
                     <connections>
                         <outlet property="blurButton" destination="CfZ-vs-eFi" id="Y6Y-7N-CQH"/>
                         <outlet property="cameraImage" destination="vKs-kf-ucd" id="dty-7F-Tv0"/>
-                        <outlet property="collectionView" destination="fMl-1W-APt" id="NQK-EQ-SOg"/>
                         <outlet property="saveButton" destination="WFD-Nl-vky" id="KTO-fA-MWc"/>
                         <outlet property="selectButton" destination="jap-z0-2fL" id="AC7-DZ-Vme"/>
                         <outlet property="sepiaButton" destination="6jX-Ia-EQe" id="d4B-H1-NOq"/>
