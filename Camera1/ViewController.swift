@@ -21,16 +21,16 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     
     //filterの設定をこのCollectionViewにつなげていきたい。
     @IBOutlet weak var collectionView: UICollectionView!
-
+    
     //セピア加工用のボタン
     @IBOutlet var sepiaButton:UIButton!
     @IBOutlet var blurButton:UIButton!
     
-    let imageArray = ["sepia.jpg","sepia.jpg","sepia.jpg","","","","","","",""]
+    let imageArray = ["sepia.jpg","sepia.jpg","sepia.jpg",""]
     let labelArray = ["sepia","blur","another","","","","","","",""]
     
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -44,7 +44,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! FilterCollectionViewCell
         
         cell.backgroundColor = UIColor.orangeColor()
-//        cell.filterlabel.text = indexPath.row.description
+        //        cell.filterlabel.text = indexPath.row.description
         cell.filterlabel.text = "\(labelArray[indexPath.row])"
         cell.exampleimage.image = UIImage(named: "sepia.jpg")
         
@@ -55,7 +55,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     
     //Cellの総数を返す
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 4
     }
     
     
@@ -63,7 +63,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("Num: \(indexPath.row)")
         print("\(labelArray[indexPath.row])")
-
+        
         if indexPath.row == 0{
             sepia()
         }else if indexPath.row == 1{
@@ -72,37 +72,30 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
             another()
         }else if indexPath.row == 3{
             mono()
-        
+            
         }
     }
-    
-
-    
-    
-    
-    
-    
     //写真を撮る　カメラの起動
     @IBAction func takePhoto(){
-    
+        
         //カメラの使用が可能かを調べる
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
-        
+            
             let imagepicker:UIImagePickerController = UIImagePickerController()
             imagepicker.delegate = self
             //カメラへのアクセス
             imagepicker.sourceType = UIImagePickerControllerSourceType.Camera
             self.presentViewController(imagepicker, animated: true, completion: nil)
-        
+            
         }
             //難しければ、"error"とログを表示
         else{
+            
+            
             print("error")
         }
-    
+        
     }
-    
-    
     
     @IBAction func selectPhoto(){
         //フォトライブラリにアクセスが可能かを調べる
@@ -126,12 +119,11 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     
     //imageviewに表示されているものをカメラロールに保存
     @IBAction func save (){
-        var imageView:UIImage!
-        imageView = cameraImage.image
-        
-        if imageView != nil{
-            UIImageWriteToSavedPhotosAlbum(imageView, self, nil, nil)
-            
+        var image:UIImage!
+        image = cameraImage.image
+        //image = UIImage(named:"disk.png")
+        if image != nil{
+            UIImageWriteToSavedPhotosAlbum(image, self, "image:didFinishSavingWithError:contextInfo:", nil)
             print("save")
         }
     }
@@ -145,14 +137,26 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         }
         //閉じる処理？
         dismissViewControllerAnimated(true, completion: nil)
-
+        
     }
-
- 
+    
+    func image(image: UIImage, didFinishSavingWithError error: NSError!, contextInfo: UnsafeMutablePointer<Void>) {
+        
+        var title = "保存完了"
+        var message = "アルバムへの保存完了"
+        
+        if error != nil {
+            title = "エラー"
+            message = "アルバムへの保存に失敗しました"
+        }
+        
+        print(title)
+    }
+    
     
     
     func sepia(){
-//    MARK:SepiaFilter
+        //    MARK:SepiaFilter
         let mySepiaFilter = CIFilter(name: "CISepiaTone")
         
         mySepiaFilter!.setValue(CIImage(image: cameraImage.image!), forKey: kCIInputImageKey)
@@ -160,8 +164,13 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         mySepiaFilter!.setValue(1.0, forKey: kCIInputIntensityKey)
         
         let myOutputImage : CIImage = mySepiaFilter!.outputImage!
+        //コンテキストを作成
+        let ciContext:CIContext = CIContext(options:nil)
         
-        cameraImage.image = UIImage(CIImage: myOutputImage)
+        //フィルターを通した画像を生成
+        let cgImg:CGImageRef = ciContext.createCGImage(mySepiaFilter!.outputImage!, fromRect:mySepiaFilter!.outputImage!.extent)
+        
+        cameraImage.image = UIImage(CGImage: cgImg, scale: 1.0, orientation:UIImageOrientation.Up)
         
         cameraImage.setNeedsDisplay()
     }
@@ -172,48 +181,50 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         let myBlurFilter = CIFilter(name: "CIGaussianBlur")
         
         myBlurFilter!.setValue(CIImage(image: cameraImage.image!), forKey: kCIInputImageKey)
+
+        //コンテキストを作成
+        let ciContext:CIContext = CIContext(options:nil)
         
-//        myBlurFilter!.setValue(1.0, forKey: kCIInputIntensityKey)
+        //フィルターを通した画像を生成
+        let cgImg:CGImageRef = ciContext.createCGImage(myBlurFilter!.outputImage!, fromRect:myBlurFilter!.outputImage!.extent)
         
-        let myOutputImage2 : CIImage = myBlurFilter!.outputImage!
-        
-        cameraImage.image = UIImage(CIImage: myOutputImage2)
+        cameraImage.image = UIImage(CGImage: cgImg, scale: 1.0, orientation:UIImageOrientation.Up)
         
         cameraImage.setNeedsDisplay()
-    
-    
+        
+        
     }
     func another(){
-//            MARK:RGBColorFilterの付け方をメモとして残したかったので。
-//                CIImage *cameraImage = [CIImage imageWithCGImage:uiImage.CGImage]
-                // カラーエフェクトを指定してCIFilterをインスタンス化.
-                let myColorFilter = CIFilter(name: "CIColorCrossPolynomial")
+        //            MARK:RGBColorFilterの付け方をメモとして残したかったので。
+        //                CIImage *cameraImage = [CIImage imageWithCGImage:uiImage.CGImage]
+        // カラーエフェクトを指定してCIFilterをインスタンス化.
+        let myColorFilter = CIFilter(name: "CIColorCrossPolynomial")
         
-                // イメージの!セット.
-                myColorFilter!.setValue(CIImage(image: cameraImage.image!), forKey: kCIInputImageKey)
+        // イメージの!セット.
+        myColorFilter!.setValue(CIImage(image: cameraImage.image!), forKey: kCIInputImageKey)
         
-                let r: [CGFloat] = [0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-                let g: [CGFloat] = [0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-                let b: [CGFloat] = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        let r: [CGFloat] = [0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        let g: [CGFloat] = [0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        let b: [CGFloat] = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         
-                // モノクロ化するための値の調整.
-                myColorFilter!.setValue(CIVector(values: r, count: 10), forKey: "inputRedCoefficients")
-                myColorFilter!.setValue(CIVector(values: g, count: 10), forKey: "inputGreenCoefficients")
-                myColorFilter!.setValue(CIVector(values: b, count: 10), forKey: "inputBlueCoefficients")
+        // モノクロ化するための値の調整.
+        myColorFilter!.setValue(CIVector(values: r, count: 100), forKey: "inputRedCoefficients")
+        myColorFilter!.setValue(CIVector(values: g, count: 10), forKey: "inputGreenCoefficients")
+        myColorFilter!.setValue(CIVector(values: b, count: 10), forKey: "inputBlueCoefficients")
         
-                // フィルターを通した画像をアウトプット.
-                let myOutputImage : CIImage = myColorFilter!.outputImage!
+        //コンテキストを作成
+        let ciContext:CIContext = CIContext(options:nil)
+        //フィルターを通した画像を生成
+        let cgImg:CGImageRef = ciContext.createCGImage(myColorFilter!.outputImage!, fromRect:myColorFilter!.outputImage!.extent)
         
-                // 再びUIViewにセット.
-                cameraImage.image = UIImage(CIImage: myOutputImage)
-                
-                // 再描画.
-                cameraImage.setNeedsDisplay()
+        cameraImage.image = UIImage(CGImage: cgImg, scale: 1.0, orientation:UIImageOrientation.Up)
+        
+        cameraImage.setNeedsDisplay()
     }
     
     
     func mono(){
-    
+        
         // カラーエフェクトを指定してCIFilterをインスタンス化.
         let myMonochromeFilter = CIFilter(name: "CIColorMonochrome")
         
@@ -224,37 +235,18 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         myMonochromeFilter!.setValue(CIColor(red: 0.8, green: 0.8, blue: 0.8), forKey: kCIInputColorKey)
         myMonochromeFilter!.setValue(1.0, forKey: kCIInputIntensityKey)
         
-        // フィルターを通した画像をアウトプット.
-        let myOutputImage : CIImage = myMonochromeFilter!.outputImage!
+        //コンテキストを作成
+        let ciContext:CIContext = CIContext(options:nil)
+        //フィルターを通した画像を生成
+        let cgImg:CGImageRef = ciContext.createCGImage(myMonochromeFilter!.outputImage!, fromRect:myMonochromeFilter!.outputImage!.extent)
         
-        // 再びUIViewにセット.
-        cameraImage.image = UIImage(CIImage: myOutputImage)
+        cameraImage.image = UIImage(CGImage: cgImg, scale: 1.0, orientation:UIImageOrientation.Up)
         
-        // 再描画.
         cameraImage.setNeedsDisplay()
-    
-    
-    
+        
+        
+        
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
 
